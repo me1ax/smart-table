@@ -1,4 +1,3 @@
-import { createElement } from "react";
 import {createComparison, defaultRules} from "../lib/compare.js";
 
 // @todo: #4.3 — настроить компаратор
