@@ -23,10 +23,17 @@ const {data, ...indexes} = initData(sourceData);
 function collectState() {
     const state = processFormData(new FormData(sampleTable.container));
 
-    const rowsPerPage = parseInt(state.rowsPerPage);    // приведём количество страниц к числу
-    const page = parseInt(state.page ?? 1);                // номер страницы по умолчанию 1 и тоже число
+    if (state.totalFrom !== undefined || state.totalTo !== undefined) {
+        state.total = [
+            state.totalFrom !== undefined && state.totalFrom !== '' ? Number(state.totalFrom) : null,
+            state.totalTo !== undefined && state.totalTo !== '' ? Number(state.totalTo) : null
+        ];
+    }
 
-    return {                                            // расширьте существующий return вот так
+    const rowsPerPage = parseInt(state.rowsPerPage);
+    const page = parseInt(state.page ?? 1);
+
+    return {
         ...state,
         rowsPerPage,
         page
@@ -74,7 +81,9 @@ const applySorting = initSorting([
 ]);
 
 const applyFiltering = initFiltering(sampleTable.filter.elements, {    // передаём элементы фильтра
-    searchBySeller: indexes.sellers                                    // для элемента с именем searchBySeller устанавливаем массив продавцов
+    searchBySeller: indexes.sellers, 
+    date: indexes.dates,
+    total: indexes.totals
 });
 
 const applySearching = initSearching('search');
