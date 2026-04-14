@@ -21,6 +21,9 @@ export function initFiltering(elements) {
             if (input) {
                 input.value = '';
             }
+            if (action.dataset && action.dataset.field) {
+                state[action.dataset.field] = '';
+            }
         }
   
         // Формируем объект фильтрации для сервера
@@ -41,4 +44,4 @@ export function initFiltering(elements) {
         updateIndexes,
         applyFiltering
     };
-  }
+}
